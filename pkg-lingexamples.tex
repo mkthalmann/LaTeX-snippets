@@ -1,0 +1,12 @@
+% linguistic examples
+\usepackage{gb4e}
+
+% roman example numbers in footnotes
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\@footnotetext}{\setcounter{fnx}{0}}{\renewcommand{\thexnumi}{\roman{xnumi}}}{}{}
+\apptocmd{\@footnotetext}{
+	\@noftnotetrue
+	\renewcommand{\thexnumi}{\arabic{xnumi}}%
+}{}{}
+\makeatother

@@ -1,0 +1,18 @@
+% for trees in extensional brackets
+% usage: 
+%   \TreeWithDelim{
+%       \begin{tikzpicture}[scale=.1]
+%          \Tree [.S [.NP [.N Peter ] ] [.VP [.V schläft ] ] ]
+%       \end{tikzpicture}
+%   }
+\newbox\mytreebox
+\newbox\mytreeboxwithdelim
+\makeatletter
+\newcommand\TreeWithDelim [1]{%
+   \setbox\mytreebox\hbox{{#1}}%
+   \setbox\mytreeboxwithdelim\hbox{$\left\llbracket\vcenter{\copy\mytreebox}\right\rrbracket$}%
+   \dimen@=\dimexpr\ht\mytreeboxwithdelim+\dp\mytreeboxwithdelim\relax
+   % in my testing, same as total height of non decorated treebox
+   \leavevmode\raise\dimexpr-.5\dimen@-\fontdimen22\textfont2+\ht\mytreebox\relax\box\mytreeboxwithdelim
+}
+\makeatother

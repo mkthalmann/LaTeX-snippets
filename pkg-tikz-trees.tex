@@ -1,0 +1,12 @@
+% set up tiks
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\def\mysize{\footnotesize}
+\usetikzlibrary{decorations.text,backgrounds,arrows.meta,decorations.pathreplacing,calc, fit, shapes,positioning,intersections,decorations.markings}
+\tikzset{
+  every tree node/.style={align=center,anchor=base, font=\mathstrut},
+  edge from parent/.append style={line width=0mm, gray}}
+\tikzset{semtree/.style={
+      level distance=2em,
+      every tree node/.style={font=\sffamily\bfseries}}
+}

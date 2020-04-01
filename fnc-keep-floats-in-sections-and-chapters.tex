@@ -1,0 +1,10 @@
+%keep floats in section
+\usepackage[section]{placeins}
+%and in the chapters
+\makeatletter
+\AtBeginDocument{%
+	\expandafter\renewcommand\expandafter\chapter\expandafter{%
+		\expandafter\@fb@secFB\chapter
+	}%
+}
+\makeatother

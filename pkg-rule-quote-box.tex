@@ -1,0 +1,25 @@
+\usepackage{relsize}
+\usepackage[framemethod=tikz]{mdframed}
+% custom rule environment
+\newmdenv[
+  linecolor=chaptercolor,
+  linewidth=2pt,
+  topline=false,
+  bottomline=false,
+  rightmargin=0,
+  leftmargin=0,
+  innerrightmargin=5pt,
+  innerleftmargin=5pt
+]{rulebox}
+% custom quotation environment
+\newmdenv[
+  linecolor=chaptercolor,
+  backgroundcolor=chaptercolor!20,
+  linewidth=4pt,
+  font=\smaller,
+  topline=false,
+  bottomline=false,
+  rightline=false,
+  innerrightmargin=5pt,
+  innerleftmargin=5pt
+]{quotebox}

@@ -1,0 +1,11 @@
+% usage \listoftablesandfigures
+% \renewcommand*\listtablename{Tables and Figures} 
+% name change, cant be done in the preamble
+
+% combined list of tables and figures
+\makeatletter
+\renewcommand*{\ext@figure}{lot}
+\let\c@figure\c@table
+\let\ftype@figure\ftype@table
+\let\listoftableandfigures\listoftables
+\makeatother

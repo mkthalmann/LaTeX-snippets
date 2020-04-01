@@ -1,0 +1,14 @@
+%adds Anhang to TOC, relies on appendixprefix=true (here with a colon after the appendix latter)
+\newcommand*{\SavedOriginaladdchaptertocentry}{}
+\appto\appendixmore{%
+	\let\SavedOriginaladdchaptertocentry\addchaptertocentry
+	\renewcommand*{\addchaptertocentry}[2]{%
+		\ifstr{#1}{}{% Eintrag ohne Nummer
+			\SavedOriginaladdchaptertocentry{#1}{#2}%
+		}{% Eintrag mit Nummer
+			\SavedOriginaladdchaptertocentry{}{%
+				\string\expandafter\string\MakeUppercase\string\appendixname
+				~#1:\string\enskip{}#2}%
+		}%
+	}%
+}

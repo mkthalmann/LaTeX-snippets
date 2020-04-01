@@ -1,0 +1,26 @@
+% fonts and typography
+% alleviate some of the warnings regarding font size
+\usepackage{unicode-math}
+\usepackage{anyfontsize}
+\setmainfont[
+  Extension = .otf,
+  UprightFont = *-regular,
+  ItalicFont  = *-italic,
+  BoldFont    = *-bold,
+  BoldItalicFont = *-bolditalic,
+  Numbers=OldStyle
+]{texgyrepagella}
+\setsansfont[Scale=MatchUppercase]{Roboto Condensed}
+\setmonofont[Scale=MatchLowercase]{Roboto Mono}
+\setmathfont{Asana Math}
+\usepackage{microtype}
+% disable orphaned lines
+\clubpenalty=10000
+\displaywidowpenalty=10000
+\widowpenalty=10000
+\tolerance 1414
+\hbadness 1414
+\emergencystretch 1.5em
+\hfuzz 0.3pt
+\vfuzz 0.3pt
+\raggedbottom
