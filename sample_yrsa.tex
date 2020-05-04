@@ -1,0 +1,74 @@
+% !TEX program = xelatex
+
+\RequirePackage[l2tabu, orthodox]{nag}
+\documentclass[
+  11pt,
+  numbers=noenddot,
+  open=any,
+  paper=a4,
+  oneside,
+  pagesize,
+  captions=tableheading,
+  bibliography=totoc,
+  ]{scrbook}
+\usepackage[
+  top=2cm, 
+  bottom=2cm, 
+  left=2.5cm, 
+  right=2.5cm, 
+  heightrounded
+  ]{geometry}
+
+\usepackage[onehalfspacing]{setspace}
+
+\usepackage{unicode-math}
+
+% language and citations
+\usepackage{polyglossia} 
+\setdefaultlanguage{ngerman}
+\usepackage{csquotes}
+\usepackage[
+  backend=biber,
+  bibstyle=biblatex-sp-unified,
+  citestyle=sp-authoryear-comp,
+  maxcitenames=3,
+  maxbibnames=99,
+  url=false
+  ]{biblatex}
+\addbibresource{bibliographyuni.bib}
+
+% fonts and typography
+\input{../snippets/fonts-yrsa-exo-asana.tex}
+
+% packages necessary for the semantics
+\usepackage{tikz}
+\usepackage{latexsym}
+\usepackage{mathtools}
+\usepackage[cal=esstix]{mathalfa}
+\usepackage{upgreek}
+\usepackage{wasysym}
+\usepackage{stmaryrd}
+\usepackage{soul}
+\newcommand{\sem}[1]{\mbox{$\llbracket$\sffamily\textbf{#1}$\rrbracket$}}
+
+\usepackage{gb4e}
+
+\begin{document}
+
+Sed vestibulum urna quis leo tempor aliquam. Nullam in neque nec nibh tempor aliquet vel in libero. Integer tincidunt sodales porta. Nunc eu \textbf{pretium turpis}. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum fringilla, purus at varius molestie, leo velit vestibulum leo, non commodo tortor ligula sit amet orci. Proin volutpat, nunc nec mattis rhoncus, lectus enim eleifend elit, quis mattis \textit{ligula odio eget risus}. Mauris viverra pellentesque metus. Nulla sit amet neque quis ante vulputate lobortis vel vel mi. Pellentesque non quam cursus, pulvinar nunc sit amet, accumsan tortor. Fusce vehicula orci et mollis lobortis. \textsc{Nunc semper accumsan condimentum}. Duis maximus varius gravida. Nam eget imperdiet justo. Ut quis lectus congue, gravida dui nec, ornare velit.
+
+\begin{exe}
+  \ex Lexikoneinträge
+  
+  \sem{not} = $\lambda p \in D_t$ . $p=0$\\
+	\sem{Carla} = Carla\\
+	\sem{invite} = $\lambda x \in D_e$ . [$\lambda y \in D_e$ . $y$ lädt $x$ ein]\\
+	\sem{a} = $\lambda f \in D_{\langle e, t\rangle}$ . $[\lambda g \in D_{\langle e, t\rangle}$ . es gibt ein $x$, sodass $f(x)=1$ und $g(x)=1]$\\
+	\sem{politician} = $\lambda x \in D_e$ . $x$ ist ein Politiker
+\end{exe}
+
+Aliquam erat volutpat. Aliquam id pretium diam. Maecenas gravida ante ac rutrum suscipit. Vivamus sed nibh consequat, hendrerit tellus ut, hendrerit massa. Aenean venenatis condimentum luctus. Ut porta ex eu facilisis ultricies. Nam in purus ac turpis fermentum consequat sit amet id elit. Pellentesque pharetra tempor tortor. Duis ante nisi, vulputate vitae sodales vitae, volutpat id est. \texttt{Aliquam quis nunc et orci viverra egestas. Cras ac condimentum tellus. Morbi nibh odio, dignissim nec egestas vitae, pharetra quis dolor.} Etiam sed luctus massa, non finibus nisl. Suspendisse potenti. Vestibulum feugiat ultrices consectetur. Quisque faucibus viverra lorem, quis lobortis tortor dignissim at.
+
+{\sffamily Praesent in vehicula metus. Fusce luctus nisl commodo mauris fringilla, et tempor mi pretium. Donec pulvinar diam et elementum tincidunt. Morbi turpis nisl, porttitor sed sem eu, convallis fringilla arcu. Sed tristique lacus diam, at suscipit libero vehicula sed. Proin ut nunc eu leo fermentum volutpat. Mauris gravida faucibus nulla eget faucibus. Nunc eget nulla eleifend, venenatis quam at, vehicula ex.}
+  
+\end{document}
