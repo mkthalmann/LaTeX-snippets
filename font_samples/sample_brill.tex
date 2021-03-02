@@ -1,0 +1,60 @@
+% !TEX program = xelatex
+
+\RequirePackage[l2tabu, orthodox]{nag}
+\documentclass[
+  11pt,
+  numbers=noenddot,
+  open=any,
+  paper=a4,
+  oneside,
+  pagesize,
+  captions=tableheading,
+  bibliography=totoc,
+  ]{scrbook}
+\usepackage[
+  top=2cm, 
+  bottom=2cm, 
+  left=2.5cm, 
+  right=2.5cm, 
+  heightrounded
+  ]{geometry}
+
+\usepackage[onehalfspacing]{setspace}
+
+\usepackage{unicode-math}
+
+% language and citations
+\usepackage{polyglossia} 
+\setdefaultlanguage{ngerman}
+\usepackage{csquotes}
+\usepackage[
+  backend=biber,
+  style=unified,
+  maxcitenames=3,
+  maxbibnames=99,
+  url=false
+  ]{biblatex}
+\addbibresource{../../bibliography/bibliographyuni.bib}
+
+% fonts and typography
+\input{../../snippets/fonts-brill.tex}
+
+
+% packages necessary for the semantics
+\usepackage{tikz}
+\usepackage{latexsym}
+\usepackage{mathtools}
+\usepackage[cal=esstix]{mathalfa}
+\usepackage{upgreek}
+\usepackage{wasysym}
+\usepackage{stmaryrd}
+\usepackage{soul}
+\newcommand{\sem}[1]{\mbox{$\llbracket$\sffamily\textbf{#1}$\rrbracket$}}
+
+\usepackage{gb4e}
+
+\begin{document}
+
+\input{sample.tex}
+
+\end{document}
