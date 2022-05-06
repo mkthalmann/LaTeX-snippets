@@ -1,0 +1,19 @@
+% textoverset
+\makeatletter
+\newcommand{\dynscriptsize}{\check@mathfonts\fontsize{\sf@size}{\z@}\selectfont}
+\makeatother
+\newcommand\textoverset[2]{%
+  \leavevmode
+  \vbox{\offinterlineskip
+    \halign{%
+      \hfil##\hfil\cr % center
+      \dynscriptsize#1\cr
+      \noalign{\kern0ex}
+      #2\cr
+    }%
+  }%
+}
+% gestures
+\newcommand\gesture[2]{
+  \textoverset{\hfill\normalfont\textbf{\fontsize{6pt}{0pt}\selectfont\sffamily #2}}{$\overline{\text{#1}}$}
+}
