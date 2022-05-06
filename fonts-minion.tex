@@ -1,0 +1,36 @@
+% fonts and typography
+% alleviate some of the warnings regarding font size
+\usepackage{anyfontsize}
+\setmainfont[Numbers=OldStyle]{Minion Pro}
+\setsansfont[Scale=MatchLowercase]{Optima}
+\setmonofont[Scale=MatchLowercase]{Hack}
+
+\unimathsetup{math-style=ISO, partial=upright, nabla=upright}
+\setmathfont{Asana Math}
+
+\usepackage[final,protrusion={true,compatibility}]{microtype}
+% disable orphaned lines
+\clubpenalty=10000
+\displaywidowpenalty=10000
+\widowpenalty=10000
+\tolerance1414
+\hbadness1414
+\emergencystretch1.5em
+\hfuzz0.3pt
+\vfuzz0.3pt
+\raggedbottom
+
+\makeatletter
+\renewcommand{\@makefntext}[1]{%
+	\setlength{\parindent}{0pt}
+	\begin{list}{}{%
+			\setlength{\topsep}{0pt}
+			\setlength{\partopsep}{0pt}
+			\setlength{\labelwidth}{.5em} % Space from number to border
+			\setlength{\labelsep}{0.3em} % Space from number to text
+			\setlength{\leftmargin}{\labelwidth}
+			\addtolength{\leftmargin}{\labelsep}
+			\footnotesize}\item[{\makebox[\labelwidth][r]{\@makefnmark}}]#1%
+	\end{list}
+}
+\makeatother
