@@ -4,11 +4,101 @@
 \usepackage[cal=esstix]{mathalfa}
 \usepackage{upgreek}
 \usepackage{wasysym}
+\usepackage{amssymb}
 \usepackage{stmaryrd}
 \usepackage{soul}
 \newcommand{\sem}[1]{\mbox{\(\llbracket\)\sffamily\textbf{#1}\(\rrbracket\)}}
+\newcommand{\som}[1]{\mbox{\(|\!|\)\sffamily\textbf{#1}\(|\!|\)}}
+\newcommand{\exh}{\ensuremath{\mathcal{E}\mkern-6mu\mathcal{x}\mkern-5mu\mathcal{h}}}
+\newcommand{\alt}{\ensuremath{\mathcal{A}\mkern-5mu\mathcal{l}\mkern-4mu\mathcal{t}}}
+
+% https://tex.stackexchange.com/a/47025
+\makeatletter
+\newcommand*\Neg[2][0mu]{\Neginternal{#1}{\negslash}{#2}}
+\newcommand*\sNeg[2][0mu]{\Neginternal{#1}{\snegslash}{#2}}
+\newcommand*\Neginternal[3]{\mathpalette\Neg@{{#1}{#2}{#3}}}
+\newcommand*\Neg@[2]{\Neg@@{#1}#2}
+\newcommand*\Neg@@[4]{%
+  \mathrel{\ooalign{%
+    $\m@th#1#4$\cr
+    \hidewidth$\m@th#3{#1}\mkern\muexpr#2*2$\hidewidth\cr
+  }}%
+}
+
+\newcommand*\negslash[1]{\m@th#1\not\mathrel{\phantom{=}}}
+\newcommand*\snegslash[1]{\rotatebox[origin=c]{60}{\raisebox{1pt}{$\m@th#1-$}}}
+\makeatother
+
+\newcommand{\nrightsquigarrow}{\ensuremath{\sNeg[-4mu]{\rightsquigarrow}}}
+
+\usepackage{calrsfs}
+\DeclareMathAlphabet{\pazocal}{OMS}{zplm}{m}{n}
+% allow for lowercase mathcal (not necessary when the two lines above this (calrsfs) is not loaded)
+\let\mathcal=\mathscr
 
 \usepackage{pifont}
 % make the two the same width
-\newcommand{\bad}{\ding{55}\;\,}
-\newcommand{\good}{\ding{51}\;}
+\newcommand{\bad}{\ding{55}}
+\newcommand{\good}{\ding{51}}
+
+% predicate typesetting (e.g., "tickle(x, y)")
+\newcommand{\pred}[1]{\textbf{\sffamily #1}}
+
+% type typesetting
+\newcommand{\te}{e}
+\newcommand{\tet}{\ensuremath{\langle e, t\rangle}}
+\newcommand{\tagn}[1]{\ensuremath{#1}}
+\newcommand{\type}[1]{\ensuremath{\langle #1\rangle}}
+\newcommand{\tq}{\langle\!\tet, \langle\!\tet, t\rangle\!\rangle}
+
+% lambda terms with type restrictions; versions ending in "s" are short versions
+% type e
+\newcommand{\lambde}[1]{\ensuremath{\lambda #1 : #1 \in D_{\te}\, .\,}}
+\newcommand{\lambdes}[1]{\ensuremath{\lambda #1_{\te}\, .\,}}
+
+% type <et>
+\newcommand{\lambdet}[1]{\ensuremath{\lambda #1 : #1 \in D_{\tet}\, .\,}}
+\newcommand{\lambdets}[1]{\ensuremath{\lambda #1_{\tet}\, .\,}}
+
+% type agnostic
+\newcommand{\lambdagn}[2]{\ensuremath{\lambda #1 : #1 \in D_{\tagn{#2}}\, .\,}}
+\newcommand{\lambdagns}[2]{\ensuremath{\lambda #1_{\tagn{#2}}\, .\,}}
+
+% predicate lexical entries
+% one argument
+\newcommand{\fullone}[1]{\ensuremath{\lambde{x}x\ \text{#1}}}
+\newcommand{\fullones}[1]{\ensuremath{\lambdes{x}x\ \text{#1}}}
+\newcommand{\shortone}[1]{\ensuremath{\lambdes{x}\pred{#1}(x)}}
+
+% two arguments
+\newcommand{\fulltwo}[1]{\ensuremath{\lambde{x}[\lambde{y}y\ \text{#1}\ x}}
+\newcommand{\fulltwos}[1]{\ensuremath{\lambdes{x}[\lambdes{y}y\ \text{#1}\ x}}
+\newcommand{\shorttwo}[1]{\ensuremath{\lambdes{x}[\lambdes{y}\pred{#1}(y, x)}}
+
+% three arguments
+\newcommand{\fullthree}[1]{\ensuremath{\lambde{x}[\lambde{y}[\lambde{z}z\ \text{#1}\ x\ \text{to}\ y]]}}
+\newcommand{\shortthree}[1]{\ensuremath{\lambdes{x}[\lambdes{y}[\lambdes{z}\pred{#1}(z, y, x)]]}}
+
+% quantifiers; filled versions without lambda terms
+\newcommand{\quni}[2]{\ensuremath{\lambdet{#1}[\lambdet{#2}\forall\! x[#1(x) \rightarrow #2(x)]]}}
+\newcommand{\qunis}[2]{\ensuremath{\lambdets{#1}[\lambdets{#2}\forall\! x[#1(x) \rightarrow #2(x)]]}}
+\newcommand{\qunifilled}[2]{\ensuremath{\forall\! x[\pred{#1} \rightarrow \pred{#2}]}}
+
+\newcommand{\qext}[2]{\ensuremath{\lambdet{#1}[\lambdet{#2}\exists x[#1(x) \land #2(x)]]}}
+\newcommand{\qexts}[2]{\ensuremath{\lambdets{#1}[\lambdets{#2}\exists x[#1(x) \land #2(x)]]}}
+\newcommand{\qextfilled}[2]{\ensuremath{\exists x[\pred{#1} \land \pred{#2}]}}
+
+% connectives
+\newcommand{\lexand}{\ensuremath{\lambdagn{p}{t}\lambdagn{q}{t}p = q = 1}}
+\newcommand{\lexor}{\ensuremath{\lambdagn{p}{t}\lambdagn{q}{t}p = 1 \lor q = 1}}
+\newcommand{\lexif}{\ensuremath{\lambdagn{p}{t}\lambdagn{q}{t}p = 0 \lor q = 1}}
+
+
+% predicates with worlds
+% one
+\newcommand{\fullonew}[1]{\ensuremath{\lambde{x}\lambdagn{w}{s}x\ \text{#1 in } w}}
+\newcommand{\shortonew}[1]{\ensuremath{\lambdes{x}\lambdagns{w}{s}\pred{#1}(x,w)}}
+
+% two
+\newcommand{\fulltwow}[1]{\ensuremath{\lambde{x}\lambde{y}\lambdagn{w}{s}y\ \text{#1}\ x \text{ in } w}}
+\newcommand{\shorttwow}[1]{\ensuremath{\lambdes{x}\lambdes{y}\lambdagns{w}{s}\pred{#1}(y, x, w)}}
