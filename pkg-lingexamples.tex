@@ -15,3 +15,12 @@
 \renewcommand{\eachwordone}{\itshape}
 % \renewcommand{\eachwordtwo}{\sffamily}
 % \renewcommand{\eachwordthree}{\sffamily}
+
+% better references
+\usepackage[noabbrev,capitalize,nameinlink]{cleveref}
+% do not add "example" (first arg) or "examples" (second argument, with two labels), simply add the
+% numbers and brackets
+\crefname{xnumi}{}{}
+\crefname{xnumii}{}{}
+\creflabelformat{xnumi}{#2(#1)#3}
+\creflabelformat{xnumii}{#2(#1)#3}
