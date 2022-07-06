@@ -2,14 +2,17 @@
 \usepackage[framemethod=tikz]{mdframed}
 % custom rule environment
 \newmdenv[
-  linecolor=chaptercolor,
+  linecolor=mygreen,
+  fontcolor=textcolor,
   linewidth=2pt,
   topline=false,
   bottomline=false,
   rightmargin=0,
   leftmargin=0,
   innerrightmargin=5pt,
-  innerleftmargin=5pt
+  innerleftmargin=5pt,
+  skipabove=3ex,
+  skipbelow=-.5ex
 ]{rulebox}
 % custom quotation environment
 \newmdenv[
@@ -21,7 +24,9 @@
   bottomline=false,
   rightline=false,
   innerrightmargin=5pt,
-  innerleftmargin=5pt
+  innerleftmargin=5pt,
+  skipabove=3ex,
+  skipbelow=-.5ex
 ]{quotebox}
 \newmdenv[
   linecolor=myred,
@@ -31,5 +36,7 @@
   rightmargin=0,
   leftmargin=0,
   innerrightmargin=5pt,
-  innerleftmargin=5pt
+  innerleftmargin=5pt,
+  skipabove=3ex,
+  skipbelow=-.5ex
 ]{warning}
