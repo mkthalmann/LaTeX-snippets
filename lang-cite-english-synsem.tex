@@ -5,6 +5,7 @@
 \usepackage[
   backend=biber,
   style=unified,
+  useprefix=true,
   maxcitenames=3,
   maxbibnames=99,
   url=false,
@@ -14,3 +15,15 @@
 
 \DeclareFieldFormat{postnote}{#1}
 \DeclareFieldFormat{multipostnote}{#1}
+
+
+\DeclareCiteCommand{\citeauthor}
+  {\boolfalse{citetracker}%
+   \boolfalse{pagetracker}%
+   \usebibmacro{prenote}}
+  {\ifciteindex
+     {\indexnames{labelname}}
+     {}%
+   \printtext[bibhyperref]{\printnames{labelname}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
