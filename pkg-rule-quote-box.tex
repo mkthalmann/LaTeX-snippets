@@ -40,3 +40,14 @@
   skipabove=3ex,
   skipbelow=-.5ex
 ]{warning}
+\newcommand\mybox[2][fill=mygreen!20]{%
+  \tikz[baseline]\node[%
+    mygreen,
+    font=\normalfont,
+    inner ysep=0pt,
+    inner xsep=3pt,
+    anchor=text,
+    rectangle,
+    rounded corners=1mm,
+    #1] {\strut#2};%
+}
