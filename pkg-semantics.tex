@@ -45,7 +45,7 @@
 \newcommand{\pred}[1]{\textbf{\sffamily #1}}
 
 % type typesetting
-\newcommand{\te}{e}
+\newcommand{\te}{\ensuremath{e}}
 \newcommand{\tet}{\ensuremath{\langle e, t\rangle}}
 \newcommand{\tagn}[1]{\ensuremath{#1}}
 \newcommand{\type}[1]{\ensuremath{\langle #1\rangle}}
@@ -87,6 +87,8 @@
 \newcommand{\qext}[2]{\ensuremath{\lambdet{#1}[\lambdet{#2}\exists x[#1(x) \land #2(x)]]}}
 \newcommand{\qexts}[2]{\ensuremath{\lambdets{#1}[\lambdets{#2}\exists x[#1(x) \land #2(x)]]}}
 \newcommand{\qextfilled}[2]{\ensuremath{\exists x[\pred{#1} \land \pred{#2}]}}
+
+\newcommand{\qno}[2]{\ensuremath{\lambdet{#1}[\lambdet{#2}\neg\exists x[#1(x) \land #2(x)]]}}
 
 % connectives
 \newcommand{\lexand}{\ensuremath{\lambdagn{p}{t}\lambdagn{q}{t}p = q = 1}}
