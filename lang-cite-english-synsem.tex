@@ -5,6 +5,7 @@
 \usepackage[
   backend=biber,
   style=unified,
+  sortcites=true,
   useprefix=true,
   maxcitenames=3,
   maxbibnames=99,
@@ -16,14 +17,16 @@
 \DeclareFieldFormat{postnote}{#1}
 \DeclareFieldFormat{multipostnote}{#1}
 
+\AtBeginRefsection{\GenRefcontextData{sorting=ynt}}
+\AtEveryCite{\localrefcontext[sorting=ynt]}
 
 \DeclareCiteCommand{\citeauthor}
-  {\boolfalse{citetracker}%
-   \boolfalse{pagetracker}%
-   \usebibmacro{prenote}}
-  {\ifciteindex
-     {\indexnames{labelname}}
-     {}%
-   \printtext[bibhyperref]{\printnames{labelname}}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
+{\boolfalse{citetracker}%
+  \boolfalse{pagetracker}%
+  \usebibmacro{prenote}}
+{\ifciteindex
+  {\indexnames{labelname}}
+  {}%
+  \printtext[bibhyperref]{\printnames{labelname}}}
+{\multicitedelim}
+{\usebibmacro{postnote}}
