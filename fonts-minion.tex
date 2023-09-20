@@ -20,20 +20,44 @@
 \vfuzz0.3pt
 \raggedbottom
 
+% fix weird apostrophe spacing with minion
+\makeatletter
+\XeTeXinterchartokenstate=1
+
+\newXeTeXintercharclass\LetterClass
+\@tempcnta=`\A
+\loop\unless\ifnum\@tempcnta>`\Z
+\XeTeXcharclass \@tempcnta \LetterClass
+\advance \@tempcnta by 1
+\repeat
+\@tempcnta=`\a
+\loop\unless\ifnum\@tempcnta>`\z
+\XeTeXcharclass \@tempcnta \LetterClass
+\advance \@tempcnta by 1
+\repeat
+
+\newXeTeXintercharclass\ApostropheClass
+\XeTeXcharclass `’ \ApostropheClass
+\XeTeXcharclass `' \ApostropheClass
+\XeTeXinterchartoks \LetterClass \ApostropheClass = {\kern.1ex }
+\XeTeXinterchartoks \ApostropheClass \LetterClass = {\kern.1ex }
+
+\makeatother
+
 % allow linebreaks in links at any alphanumerical character
 \usepackage{xurl}
 
 \makeatletter
 \renewcommand{\@makefntext}[1]{%
-    \setlength{\parindent}{0pt}
-    \begin{list}{}{%
-            \setlength{\topsep}{0pt}
-            \setlength{\partopsep}{0pt}
-            \setlength{\labelwidth}{.5em} % Space from number to border
-            \setlength{\labelsep}{0.3em} % Space from number to text
-            \setlength{\leftmargin}{\labelwidth}
-            \addtolength{\leftmargin}{\labelsep}
-            \footnotesize}\item[{\makebox[\labelwidth][r]{\@makefnmark}}]#1%
-    \end{list}
+  \setlength{\parindent}{0pt}
+  \begin{list}{}{%
+      \setlength{\topsep}{0pt}
+      \setlength{\partopsep}{0pt}
+      \setlength{\labelwidth}{.5em} % Space from number to border
+      \setlength{\labelsep}{0.3em} % Space from number to text
+      \setlength{\leftmargin}{\labelwidth}
+      \addtolength{\leftmargin}{\labelsep}
+      \footnotesize}\item[{\makebox[\labelwidth][r]{\@makefnmark}}]#1%
+  \end{list}
 }
 \makeatother

@@ -1,9 +1,9 @@
 % change booktabs rule color;
 % enables the \rulecolor{color} command
 \makeatletter
-    \def\rulecolor#1#{\CT@arc{#1}}
-    \def\CT@arc#1#2{%
-      \ifdim\baselineskip=\z@\noalign\fi
-      {\gdef\CT@arc@{\color#1{#2}}}}
-    \let\CT@arc@\relax
-    \makeatother
+\def\rulecolor#1#{\CT@arc{#1}}
+\def\CT@arc#1#2{%
+\ifdim\baselineskip=\z@\noalign\fi
+{\gdef\CT@arc@{\color#1{#2}}}}
+\let\CT@arc@\relax
+\makeatother

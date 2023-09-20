@@ -2,7 +2,7 @@
 \usepackage{tikz}
 \usepackage{tikz-qtree}
 \def\mysize{\footnotesize}
-\usetikzlibrary{
+\usetikzlibrary{%
   arrows.meta,
   backgrounds,
   calc,
@@ -16,13 +16,13 @@
   positioning,
   shapes,
   tikzmark
-  }
-\tikzset{
+}
+\tikzset{%
   % every tree node/.style={align=center,child anchor=north, anchor=north,parent
   % anchor=center},
   every tree node/.style={align=center},
   edge from parent/.append style={line width=0mm, gray},
   execute at begin node=\mathstrut}
-\tikzset{semtree/.style={
+\tikzset{semtree/.style={%
       every tree node/.style={font=\sffamily\bfseries}}
 }

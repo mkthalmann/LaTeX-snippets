@@ -12,9 +12,9 @@
 
 \tikzset{
     tight fit/.style={
-        inner sep=0pt,
-        outer sep=0pt,
-    },
+            inner sep=0pt,
+            outer sep=0pt,
+        },
     %
     %
     % How far above the reference anchor of the text,
@@ -29,18 +29,18 @@
     contour mark prefix=contour,
     % The style for the contour path
     contour/.style={
-        draw, 
-        rounded corners=1ex,
-        thick
-    },
+            draw,
+            rounded corners=1ex,
+            thick
+        },
     % The style for the token nodes
     every contour token/.style={
-        anchor=base west, 
-        inner sep=0pt,
-    },
+            anchor=base west,
+            inner sep=0pt,
+        },
     contour underline/.style={
-        draw
-    },
+            draw
+        },
     % The character to insert a mark (use with care)
     contour mark character/.store in=\contourmarkchar,
     contour mark character=|,
@@ -53,79 +53,77 @@
     %
     % Default stuff
     contour mark code={%
-        \coordinate (\contourmarkprefix-\the\contourmarkcount)
-          at ([yshift=\contourraise, y=\contourscale,               
-          shift={(0,\currentcontourheight)}]token-\the\currenttokennumber.\contourreferenceanchor);
-    },
+            \coordinate (\contourmarkprefix-\the\contourmarkcount)
+            at ([yshift=\contourraise, y=\contourscale,
+                shift={(0,\currentcontourheight)}]token-\the\currenttokennumber.\contourreferenceanchor);
+        },
     contour token code={%
-        \node [every contour token/.try] at 
-        (token-\the\lasttokennumber.base east) 
+            \node [every contour token/.try] at
+            (token-\the\lasttokennumber.base east)
             (token-\the\currenttokennumber) {\token};
-    },
+        },
     contour code={
-        \draw [contour] (\contourmarkprefix-1)
-            \foreach \y in {2,...,\the\contourmarkcount}{ -- 
-                    (\contourmarkprefix-\y) };                  
-    },
+            \draw [contour] (\contourmarkprefix-1)
+            \foreach \y in {2,...,\the\contourmarkcount}{ --
+                    (\contourmarkprefix-\y) };
+        },
     %
     % Don't draw the contour.
     tokens only/.style={
-        contour code={}
-    },
+            contour code={}
+        },
     %
     % Only draw the contour (but the space is still used for the tokens)
     contour only/.style={
-        every contour token/.append style={
-            execute at begin node={\setbox\contourbox=\hbox\bgroup},
-            execute at end node=\egroup\phantom{\box\contourbox}%
+            every contour token/.append style={
+                    execute at begin node={\setbox\contourbox=\hbox\bgroup},
+                    execute at end node=\egroup\phantom{\box\contourbox}%
+                },
+            underline/.style={
+                    draw=none
+                }
         },
-        underline/.style={
-            draw=none
-        }
-    },
     %
     % Make tokens follow the contour marks.
     tokens follow contour/.style={
-        tokens only,
-        contour token code={%
-            \node [every contour token/.try, y=\contourscale] at 
-                (token-\the\lasttokennumber.base east |- 
-                0,\currentcontourheight) 
-                (token-\the\currenttokennumber) {\token};
+            tokens only,
+            contour token code={%
+                    \node [every contour token/.try, y=\contourscale] at
+                    (token-\the\lasttokennumber.base east |-
+                    0,\currentcontourheight)
+                    (token-\the\currenttokennumber) {\token};
+                },
         },
-    },
     % What style to use when drawing underline
     underline/.style={
-        draw
-    },
+            draw
+        },
     % The underline is drawn along the south side of a node which 
     % takes this style.
     underline token/.style={
-        inner ysep=1pt
-    },
+            inner ysep=1pt
+        },
     % When grouping tokens (e.g., for putting box around)
     % this style is applied to a node that is fitted around the group
     token group/.style={
-        inner xsep=1pt,
-        inner ysep=2pt,
-        rounded corners=2pt
-    },
+            inner xsep=1pt,
+            inner ysep=2pt,
+            rounded corners=2pt
+        },
     % Draw boxes around tokens groups.
     box tokens/.style={
-        token group/.append style={
-            draw
-        }
-    },  
+            token group/.append style={
+                    draw
+                }
+        },
     % Change the width of the spaces.
     space token width/.code=\pgfmathsetlength\contourspacetokenwidth{#1},
     space token width=0.125cm
 }
 
-
 \makeatletter
 
 \def\at@{@}
-
 
 \newcommand\contour[2][]{%
     \begin{scope}[#1]
@@ -136,151 +134,150 @@
         \def\lastcontourheight{0}%
         \contourtokenunderlinestate=0\relax%
         \@contour#2@%
-}
+        }
 
+        % Must check for a spaces
+        \def\@contour{\futurelet\@token\@checkforspace}
 
-% Must check for a spaces
-\def\@contour{\futurelet\@token\@checkforspace}
-
-\def\@uscore{_}
-\def\@checkforspace{%
-    \ifx\@token\@sptoken%
-        \let\@next=\@replacespace%
-    \else%
-        \if\@token\contourmarkchar%
-            \let\@next=\@contour@insertmark
-        \else%
-            \if\@token\@uscore
-                \let\@next=\@contourtoggleunderline%
+        \def\@uscore{_}
+        \def\@checkforspace{%
+            \ifx\@token\@sptoken%
+                \let\@next=\@replacespace%
             \else%
-                \let\@next=\@@contour%
+                \if\@token\contourmarkchar%
+                    \let\@next=\@contour@insertmark
+                \else%
+                    \if\@token\@uscore
+                        \let\@next=\@contourtoggleunderline%
+                    \else%
+                        \let\@next=\@@contour%
+                    \fi%
+                \fi%
             \fi%
+            \@next%
+        }
+
+        \def\@contourtoggleunderline#1{%
+            \advance\contourtokenunderlinestate by1\relax
+            \ifnum\contourtokenunderlinestate>3\relax%
+                \contourtokenunderlinestate=0\relax%
+            \fi%
+            \@contour%
+        }
+
+        \def\@contour@insertmark{%
+            \afterassignment\@@contour@insertmark\let\@token=%
+        }
+
+        \def\@@contour@insertmark{%
+            \futurelet\@token\@@@contour@insertmark}%
+
+        \def\@@@contour@insertmark{%
+        \if\@token[%
+            \let\@next=\@@@@contour@insertmark%
+        \else%
+            \let\currentcontourheight=\lastcontourheight%
+            \let\@next=\@@@@@contour@insertmark%
         \fi%
-    \fi%
-    \@next%
-}
+        \@next%
+        }
 
-\def\@contourtoggleunderline#1{%
-    \advance\contourtokenunderlinestate by1\relax
-    \ifnum\contourtokenunderlinestate>3\relax%
-        \contourtokenunderlinestate=0\relax%
-    \fi%
-    \@contour%
-}
+        \def\@@@@contour@insertmark[#1]{%
+            \def\@tmp{#1}%
+            \ifx\@tmp\@empty%
+                \let\currentcontourheight=\lastcontourheight%
+            \else%
+                \def\currentcontourheight{#1}%
+            \fi%
+            \@@@@@contour@insertmark}
 
-\def\@contour@insertmark{%
-    \afterassignment\@@contour@insertmark\let\@token=%
-}
+        \def\@@@@@contour@insertmark{%
+            \advance\contourmarkcount by1\relax%
+            % Code for inserting mark
+            \contourmarkcode%
+            \let\lastcontourheight=\currentcontourheight%
+            \@contour}
 
-\def\@@contour@insertmark{%
-    \futurelet\@token\@@@contour@insertmark}%
+        \def\contourspacetoken{{\hbox to \contourspacetokenwidth{\hfill}}}
 
-\def\@@@contour@insertmark{%
-    \if\@token[%
-        \let\@next=\@@@@contour@insertmark%
-    \else%
-        \let\currentcontourheight=\lastcontourheight%
-        \let\@next=\@@@@@contour@insertmark%
-    \fi%
-    \@next%
-}
+        \def\@replacespace#1{%
+            \@contour\contourspacetoken#1%
+        }
 
-\def\@@@@contour@insertmark[#1]{%
-    \def\@tmp{#1}%
-    \ifx\@tmp\@empty%
-        \let\currentcontourheight=\lastcontourheight%
-    \else%
-        \def\currentcontourheight{#1}%
-    \fi%
-    \@@@@@contour@insertmark}
+        \def\@@contour#1{%
+            \def\@token{#1}%
+            \if\@token\at@%
+                \@contourdounderline%
+                \pgfutil@ifundefined{pgf@sh@ns@tokengroup}{}{%
+                    \node [tight fit, fit={(tokengroup)}, token group/.try] {};
+                    \global\let\pgf@sh@ns@tokengroup=\relax%
+                }%
+                \let\@next=\@@@contour%
+            \else%
+                \lasttokennumber=\currenttokennumber%
+                \advance\currenttokennumber by1%
+                \let\token=\@token%
+                % Code for typesetting token
+                \contourtokencode%
+                % Manage underline state
+                \@contourdounderline%
+                \def\@@token{\contourspacetoken}%
+                \ifx\@token\@@token%
+                    \pgfutil@ifundefined{pgf@sh@ns@tokengroup}{}{%
+                        \pgfutil@ifundefined{pgf@sh@ns@underline}{}{%
+                            \node [tight fit, fit={(tokengroup) (underline)}]
+                            (tokengroup)
+                            {};}%
+                        \node [tight fit, fit={(tokengroup)}, token group/.try] {};
+                        \global\let\pgf@sh@ns@tokengroup=\relax%
+                    }%
+                \else
+                    \pgfutil@ifundefined{pgf@sh@ns@tokengroup}{%
+                        \node [tight fit,
+                            fit={(token-\the\currenttokennumber)}]
+                        (tokengroup) {};
+                    }{%
+                        \node [tight fit,
+                            fit={(token-\the\currenttokennumber)
+                                    (tokengroup)}]
+                        (tokengroup){};
+                    }%
+                \fi%
+                \let\@next=\@contour
+                %
+            \fi%
+            \@next%
+        }
 
-\def\@@@@@contour@insertmark{%
-    \advance\contourmarkcount by1\relax%
-     % Code for inserting mark
-    \contourmarkcode%
-    \let\lastcontourheight=\currentcontourheight%
-    \@contour}
-
-\def\contourspacetoken{{\hbox to \contourspacetokenwidth{\hfill}}}
-
-\def\@replacespace#1{%
-    \@contour\contourspacetoken#1%
-}
-
-\def\@@contour#1{%
-    \def\@token{#1}%
-    \if\@token\at@%
-        \@contourdounderline%
-        \pgfutil@ifundefined{pgf@sh@ns@tokengroup}{}{%
-            \node [tight fit, fit={(tokengroup)}, token group/.try] {};
-            \global\let\pgf@sh@ns@tokengroup=\relax%
-        }%
-        \let\@next=\@@@contour%
-    \else%
-        \lasttokennumber=\currenttokennumber%
-        \advance\currenttokennumber by1%
-        \let\token=\@token%
-        % Code for typesetting token
-        \contourtokencode%
-        % Manage underline state
-        \@contourdounderline%
-        \def\@@token{\contourspacetoken}%
-        \ifx\@token\@@token%
-            \pgfutil@ifundefined{pgf@sh@ns@tokengroup}{}{%
-                \pgfutil@ifundefined{pgf@sh@ns@underline}{}{%
-                    \node [tight fit, fit={(tokengroup) (underline)}] 
-                    (tokengroup) 
-                {};}%
-                \node [tight fit, fit={(tokengroup)}, token group/.try] {};
-                \global\let\pgf@sh@ns@tokengroup=\relax%
-            }%
-        \else
-            \pgfutil@ifundefined{pgf@sh@ns@tokengroup}{%
-                \node [tight fit, 
-                fit={(token-\the\currenttokennumber)}] 
-                (tokengroup) {};
-            }{%
-                \node [tight fit, 
-                fit={(token-\the\currenttokennumber) 
-                (tokengroup)}] 
-                (tokengroup){};
-            }%
+        \def\@contourdounderline{%
+            \ifcase\contourtokenunderlinestate%
+            \or
+                \node [tight fit, fit={(token-\the\currenttokennumber)}]
+                (underline) {};
+                \contourtokenunderlinestate=2\relax%
+            \or%
+                \node [tight fit,fit={(token-\the\currenttokennumber) (underline)}]
+                (underline) {};
+            \or%
+                \node [tight fit, fit={(underline)}, underline token/.try]
+                (underline) {};
+                \draw [underline/.try]
+                (underline.south west) -- (underline.south east);
+                \pgfutil@ifundefined{pgf@sh@ns@tokengroup}{}{%
+                    \node [tight fit, fit={(tokengroup) (underline)}]
+                    (tokengroup) {};%
+                    \node [tight fit, fit={(tokengroup)}, token group/.try] {};
+                    \global\let\pgf@sh@ns@tokengroup=\relax%
+                    \global\let\pgf@sh@ns@underline=\relax%
+                }
+                \contourtokenunderlinestate=0\relax
+            \fi%
+        }
+        \def\@@@contour{%
+        \ifnum\contourmarkcount>1
+            % Code for drawing contour
+            \contourcode%
         \fi%
-        \let\@next=\@contour
-        %
-    \fi%
-    \@next%
-}
-
-\def\@contourdounderline{%
-    \ifcase\contourtokenunderlinestate%
-     \or
-         \node [tight fit, fit={(token-\the\currenttokennumber)}] 
-         (underline) {};
-         \contourtokenunderlinestate=2\relax%
-     \or%
-            \node [tight fit,fit={(token-\the\currenttokennumber) (underline)}]
-            (underline) {};
-     \or%
-            \node [tight fit, fit={(underline)}, underline token/.try] 
-            (underline) {};
-         \draw [underline/.try]
-                    (underline.south west) -- (underline.south east);
-            \pgfutil@ifundefined{pgf@sh@ns@tokengroup}{}{%
-                 \node [tight fit, fit={(tokengroup) (underline)}] 
-                 (tokengroup) {};%
-                 \node [tight fit, fit={(tokengroup)}, token group/.try] {};
-                 \global\let\pgf@sh@ns@tokengroup=\relax%
-                 \global\let\pgf@sh@ns@underline=\relax%
-             }
-         \contourtokenunderlinestate=0\relax
-     \fi%
-}
-\def\@@@contour{%
-    \ifnum\contourmarkcount>1
-        % Code for drawing contour
-        \contourcode%
-    \fi%
     \end{scope}%
 }
 
