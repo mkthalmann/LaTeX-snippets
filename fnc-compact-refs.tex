@@ -1,0 +1,32 @@
+% compact references
+\usepackage{setspace}
+\defbibenvironment{bibliography}
+{\noindent}
+{\unspace}
+{\printtext[labelnumberwidth]{%
+    \printfield{labelprefix}%
+    \printfield{labelnumber}}%
+  \addspace}
+\renewbibmacro*{finentry}{\finentry\addspace\textcolor{chaptercolor}{$\, \bullet\, $}\addspace}
+% bold last names in bib
+\DeclareNameAlias{sortname}{family-given-fb}
+\DeclareNameFormat{family-given-fb}{%
+  \renewcommand*{\mkbibnamefamily}[1]{\mkbibbold{##1}}%
+  \ifgiveninits
+  {\usebibmacro{name:family-given}
+    {\namepartfamily}
+    {\namepartgiveni}
+    {\namepartprefix}
+    {\namepartsuffix}}
+  {\usebibmacro{name:family-given}
+    {\namepartfamily}
+    {\namepartgiven}
+    {\namepartprefix}
+    {\namepartsuffix}}%
+  \usebibmacro{name:andothers}}
+
+%% use with:
+% \AtNextBibliography{\small\textcolor{chaptercolor}{$\bullet$}}
+% \begin{spacing}{.73}
+%   \printbibliography[heading=none]
+% \end{spacing}
