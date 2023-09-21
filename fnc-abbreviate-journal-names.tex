@@ -5,13 +5,34 @@
     \map{%
       \step[fieldsource=journal, match={Journal of Semantics},
         replace={J. Semant.}]%
+      \step[fieldsource=journal, match={Journal of Pragmatics},
+        replace={J. Pragmat.}]%
       \step[fieldsource=journal, match={Natural Language Semantics},
         replace={Nat. Lang. Semant.}]%
+      \step[fieldsource=journal, match={Journal of Linguistics},
+        replace={J. Linguist.}]%
+      \step[fieldsource=journal, match={Linguistic Inquiry},
+        replace={Linguist. Inq.}]%
+      \step[fieldsource=journal, match={Journal of Statistical Software},
+        replace={J. Stat. Softw.}]%
+      \step[fieldsource=journal, match=\regexp{Semantics\x20\\\x{26}\x20Pragmatics},
+        replace={Semant. Pragmat.}]%
+      \step[fieldsource=journal, match=\regexp{Linguistics\x20\\\x{26}\x20Philosophy},
+        replace={Linguist. Philos.}]%
+      \step[fieldsource=booktitle, match=\regexp{Proceedings\x20of\x20{S}emantics\x20and\x20{L}inguistic\x20{T}heory\x20\({SALT}\)},
+        replace={Proceedings of {SALT}}]%
+      \step[fieldsource=booktitle, match=\regexp{Proceedings\x20of\x20{Semantics}\x20and\x20{Linguistic}\x20{Theory}\x20\({SALT}\)},
+        replace={Proceedings of {SALT}}]%
       \step[fieldsource=booktitle, match={Grazer Philosophische Studien},
         replace={Grazer Philos. Stud.}]%
       \step[fieldsource=publisher, match={Cambridge University Press},
         replace={CUP}]%
-      \step[fieldset=address, null] % remove address from refs
+      \step[fieldset=address, null]%
     }
+    % remove the editors for all proceedings
+    \map{\pertype{inproceedings}\step[fieldset=editor, null]}
   }
 }
+
+% remove "in" prefix
+\renewbibmacro{in:}{}
